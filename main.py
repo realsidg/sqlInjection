@@ -5,29 +5,31 @@ app = Flask(__name__)
 app.database = "sample.db"
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
-Session(app)
+# Session(app)
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/login')
-def login():
-    return render_template('login.html')
+# @app.route('/login')
+# def login():
+#     return render_template('login.html')
 
 @app.route('/restock')
 def restock():
     return render_template('restock.html')
+
 @app.route("/login",methods=['GET','POST'])
 def login():
-    if request.method == "POST" :
-        for usr in db.execute("SELECT * from USERS where username = :usr",{"usr":request.form.get("username")}).fetchall():
-            if re.match(usr[4], hashlib.md5(request.form.get('password').encode()).hexdigest()):
-                session["logged_in"]=True
-                session["username"]=usr[3]
-                session["user"]=usr[1]
-                session["user_no"]=usr[0]
-                return render_template("index.html")
+    if request.method == 'POST':
+        uname,pword = (request.form.get['username'],request.form.get['password'])
+        g.db = connect_db()
+        cur = g.db.execute("SELECT * FROM employees WHERE username = '%s' AND password = '%s'" %(uname, hash_pass(pword)))
+        g.db.close()        
+        if cur.fetchone():
+            return render_template("admin.html")
+        else:
+            return render_template("login.html")
 
     return render_template("login.html")
 # #API routes
@@ -117,9 +119,9 @@ if __name__ == "__main__":
             c.execute('INSERT INTO shop_items_old VALUES("candy", "16", "114")')
             c.execute('INSERT INTO shop_items_old VALUES("candy", "18", "97")')
 
-            c.execute('INSERT INTO employees VALUES("itsjasonh", "{}")'.format(hash_pass("badword")))
-            c.execute('INSERT INTO employees VALUES("theeguy9", "{}")'.format(hash_pass("chickennoodles")))
-            c.execute('INSERT INTO employees VALUES("newguy29", "{}")'.format(hash_pass("pass123")))
+            c.execute('INSERT INTO employees VALUES("ram", "{}")'.format(hash_pass("mainhibataunga")))
+            c.execute('INSERT INTO employees VALUES("shyam", "{}")'.format(hash_pass("chickennoodles")))
+            c.execute('INSERT INTO employees VALUES("ghanshyam", "{}")'.format(hash_pass("selvamSirZindabad")))
             connection.commit()
             connection.close()
 
