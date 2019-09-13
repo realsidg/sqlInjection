@@ -1,29 +1,29 @@
 //Using our API
 
-// function login(){
-//     var uname = document.getElementById("uname").value;
-//     var passw = document.getElementById("passw").value;
+function login(){
+    var uname = document.getElementById("uname").value;
+    var passw = document.getElementById("passw").value;
 
-//     var dat = {'username':uname, 'password':passw};
+    var dat = {'username':uname, 'password':passw};
 
-//     $.ajax('/api/v1.0/storeLoginAPI/',{
-//         method: 'POST',
-//         data: JSON.stringify(dat),
-//         dataType: "json",
-//         contentType: "application/json",
-//     }).done(function(res){
+    $.ajax('/api/v1.0/storeLoginAPI/',{
+        method: 'POST',
+        data: JSON.stringify(dat),
+        dataType: "json",
+        contentType: "application/json",
+    }).done(function(res){
 
-//       if (res['status'] == 'success'){
-//         $("#stat").html('<b>Successful Login<b>');
-//       }
-//       else{
-//         $("#stat").html('<b>Login Failed</b>');
-//       }
+      if (res['status'] == 'success'){
+        $("#stat").html('<b>Successful Login<b>');
+      }
+      else{
+        $("#stat").html('<b>Login Failed</b>');
+      }
 
-//     }).fail(function(err){
-//         $("#stat").html(err);
-//     });
-// }
+    }).fail(function(err){
+        $("#stat").html(err);
+    });
+}
 
 function search(){
     var item = document.getElementById("searchItem").value;
@@ -46,24 +46,24 @@ function search(){
     });
 }
 
-// function addItem(){
-//     var name = document.getElementById("itemName").value;
-//     var quan = document.getElementById("itemQuantity").value;
-//     var price = document.getElementById("itemPrice").value;
+function addItem(){
+    var name = document.getElementById("itemName").value;
+    var quan = document.getElementById("itemQuantity").value;
+    var price = document.getElementById("itemPrice").value;
 
-//     var dat = {'name':name, 'quantity':quan, 'price':price};
+    var dat = {'name':name, 'quantity':quan, 'price':price};
 
-//     $.ajax('/api/v1.0/storeAPI',{
-//         method: 'POST',
-//         data: JSON.stringify(dat),
-//         dataType: "json",
-//         contentType: "application/json",
-//     }).done(function(res){
-//         $("#stat").html("Successfully Added");
-//     }).fail(function(err){
-//         $("#stat").html("Error Sending Request");
-//     });
-// }
+    $.ajax('/api/v1.0/storeAPI',{
+        method: 'POST',
+        data: JSON.stringify(dat),
+        dataType: "json",
+        contentType: "application/json",
+    }).done(function(res){
+        $("#stat").html("Successfully Added");
+    }).fail(function(err){
+        $("#stat").html("Error Sending Request");
+    });
+}
 
 $(document).ready(function(){
 
