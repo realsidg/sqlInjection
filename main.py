@@ -3,6 +3,9 @@ from flask import Flask, jsonify, render_template, request, g
 
 app = Flask(__name__)
 app.database = "sample.db"
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 @app.route('/')
 def index():
@@ -15,22 +18,35 @@ def login():
 @app.route('/restock')
 def restock():
     return render_template('restock.html')
+@app.route("/login",methods=['GET','POST'])
+def login():
+    if request.method == "POST" :
+        for usr in db.execute("SELECT * from USERS where username = :usr",{"usr":request.form.get("username")}).fetchall():
+            if re.match(usr[4], hashlib.md5(request.form.get('password').encode()).hexdigest()):
+                session["logged_in"]=True
+                session["username"]=usr[3]
+                session["user"]=usr[1]
+                session["user_no"]=usr[0]
+                return render_template("index.html")
 
-#API routes
-@app.route('/api/v1.0/storeLoginAPI/', methods=['POST'])
-def loginAPI():
-    if request.method == 'POST':
-        uname,pword = (request.json['username'],request.json['password'])
-        g.db = connect_db()
-        cur = g.db.execute("SELECT * FROM employees WHERE username = '%s' AND password = '%s'" %(uname, hash_pass(pword)))
-        if cur.fetchone():
-            return render_template("admin.html")
-        else:
-            result = {'status': 'fail'}
-        g.db.close()
-        return jsonify(result)
+    return render_template("login.html")
+# #API routes
+# @app.route('/api/v1.0/storeLoginAPI/', methods=['POST'])
+# def loginAPI():
+#     if request.method == 'POST':
+#         uname,pword = (request.json['username'],request.json['password'])
+#         g.db = connect_db()
+#         cur = g.db.execute("SELECT * FROM employees WHERE username = '%s' AND password = '%s'" %(uname, hash_pass(pword)))
+#         if cur.fetchone():
+#             return render_template("admin.html")
+#         else:
+#             result = {'status': 'fail'}
+#         g.db.close()
+#         return jsonify(result)
 
-@app.route('/api/v1.0/storeAPI', methods=['GET', 'POST'])
+
+
+@app.route('/api/v1.0/storeAPI', methods=['GET'])
 def storeapi():
     if request.method == 'GET':
         g.db = connect_db()
@@ -40,14 +56,6 @@ def storeapi():
         empls = [{'employees':[dict(username=row[0], password=row[1]) for row in cur2.fetchall()]}]
         g.db.close()
         return jsonify(items+empls)
-
-    elif request.method == 'POST':
-        g.db = connect_db()
-        name,quan,price = (request.json['name'],request.json['quantity'],request.json['price'])
-        curs = g.db.execute("""INSERT INTO shop_items(name, quantitiy, price) VALUES(?,?,?)""", (name, quan, price))
-        g.db.commit()
-        g.db.close()
-        return jsonify({'status':'OK','name':name,'quantity':quan,'price':price})
 
 @app.route('/api/v1.0/storeAPI/<item>', methods=['GET'])
 def searchAPI(item):
