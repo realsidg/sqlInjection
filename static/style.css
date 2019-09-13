@@ -1,5 +1,5 @@
 body{
-    background-color: blue;
+    background-color: darkblue;
 }
 
 table, th, td {
@@ -8,7 +8,7 @@ table, th, td {
 }
 
 .button{
-    background-color: blue;
+    background-color:  darkblue;
     color: white;
     border: none;
     height: 25px;
@@ -21,7 +21,7 @@ table, th, td {
     width: 1000px;
     text-align: center;
     background-color: white;
-    border: 2px solid blue;
+    border: 2px solid darkblue;
     padding-bottom: 30px;
 }
 
@@ -42,7 +42,7 @@ table{
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: blue;
+    background-color: darkblue;
     position: fixed;
     top: 0;
     width: 100%;
