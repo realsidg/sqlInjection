@@ -24,7 +24,7 @@ def loginAPI():
         g.db = connect_db()
         cur = g.db.execute("SELECT * FROM employees WHERE username = '%s' AND password = '%s'" %(uname, hash_pass(pword)))
         if cur.fetchone():
-            return render_template("admin.html")
+            result = {'status': 'success'}
         else:
             result = {'status': 'fail'}
         g.db.close()
