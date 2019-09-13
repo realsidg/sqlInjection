@@ -18,24 +18,6 @@ def login():
 @app.route('/restock')
 def restock():
     return render_template('restock.html')
-<<<<<<< HEAD
-
-#API routes
-@app.route('/api/v1.0/storeLoginAPI/', methods=['POST'])
-def loginAPI():
-    if request.method == 'POST':
-        uname,pword = (request.json['username'],request.json['password'])
-        g.db = connect_db()
-        cur = g.db.execute("SELECT * FROM employees WHERE username = '%s' AND password = '%s'" %(uname, hash_pass(pword)))
-        if cur.fetchone():
-            return render_template("admin.html")
-        else:
-            result = {'status': 'fail'}
-        g.db.close()
-        return jsonify(result)
-
-@app.route('/api/v1.0/storeAPI', methods=['GET', 'POST'])
-=======
 @app.route("/login",methods=['GET','POST'])
 def login():
     if request.method == "POST" :
@@ -65,7 +47,6 @@ def login():
 
 
 @app.route('/api/v1.0/storeAPI', methods=['GET'])
->>>>>>> parent of fdb86a0... Revert "tatti"
 def storeapi():
     if request.method == 'GET':
         g.db = connect_db()
