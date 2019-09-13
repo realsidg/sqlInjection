@@ -82,14 +82,37 @@ if __name__ == "__main__":
         with sqlite3.connect(app.database) as connection:
             c = connection.cursor()
             c.execute("""CREATE TABLE shop_items(name TEXT, quantitiy TEXT, price TEXT)""")
+            c.execute("""CREATE TABLE shop_items_old(name TEXT, quantitiy TEXT, price TEXT)""")
             c.execute("""CREATE TABLE employees(username TEXT, password TEXT)""")
             c.execute('INSERT INTO shop_items VALUES("water", "40", "100")')
             c.execute('INSERT INTO shop_items VALUES("juice", "40", "110")')
             c.execute('INSERT INTO shop_items VALUES("candy", "100", "10")')
+            
+
+            c.execute('INSERT INTO shop_items_old VALUES("juice", "1", "67")')
+            c.execute('INSERT INTO shop_items_old VALUES("candy", "3", "70")')
+            c.execute('INSERT INTO shop_items_old VALUES("candy", "4", "123")')
+            c.execute('INSERT INTO shop_items_old VALUES("juice", "17", "116")')
+            c.execute('INSERT INTO shop_items_old VALUES("candy", "19", "125")')
+            c.execute('INSERT INTO shop_items_old VALUES("candy", "6", "104")')
+            c.execute('INSERT INTO shop_items_old VALUES("juice", "7", "105")')
+            c.execute('INSERT INTO shop_items_old VALUES("candy", "8", "53")')
+            c.execute('INSERT INTO shop_items_old VALUES("candy", "12", "95")')
+            c.execute('INSERT INTO shop_items_old VALUES("juice", "5", "84")')
+            c.execute('INSERT INTO shop_items_old VALUES("candy", "13", "105")')
+            c.execute('INSERT INTO shop_items_old VALUES("candy", "14", "112")')
+            c.execute('INSERT INTO shop_items_old VALUES("juice", "15", "97")')
+            c.execute('INSERT INTO shop_items_old VALUES("juice", "2", "84")')
+            c.execute('INSERT INTO shop_items_old VALUES("juice", "9", "95")')
+            c.execute('INSERT INTO shop_items_old VALUES("candy", "10", "105")')
+            c.execute('INSERT INTO shop_items_old VALUES("juice", "11", "53")')
+            c.execute('INSERT INTO shop_items_old VALUES("candy", "16", "114")')
+            c.execute('INSERT INTO shop_items_old VALUES("candy", "18", "97")')
+
             c.execute('INSERT INTO employees VALUES("itsjasonh", "{}")'.format(hash_pass("badword")))
-            c.execute('INSERT INTO employees VALUES("theeguy9", "{}")'.format(hash_pass("badpassword")))
+            c.execute('INSERT INTO employees VALUES("theeguy9", "{}")'.format(hash_pass("chickennoodles")))
             c.execute('INSERT INTO employees VALUES("newguy29", "{}")'.format(hash_pass("pass123")))
             connection.commit()
             connection.close()
 
-    app.run(host='0.0.0.0') # runs on machine ip address to make it visible on netowrk
+    app.run() # runs on machine ip address to make it visible on netowrk
