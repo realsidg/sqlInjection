@@ -22,14 +22,14 @@ def restock():
 @app.route("/login",methods=['GET','POST'])
 def login():
     if request.method == 'POST':
-        uname,pword = (request.form.get['username'],request.form.get['password'])
+        print(request.form)
+        uname,pword = (request.form['username'],request.form['password'])
         g.db = connect_db()
         cur = g.db.execute("SELECT * FROM employees WHERE username = '%s' AND password = '%s'" %(uname, hash_pass(pword)))
-        g.db.close()        
         if cur.fetchone():
+            g.db.close()        
             return render_template("admin.html")
-        else:
-            return render_template("login.html")
+        g.db.close()                
 
     return render_template("login.html")
 # #API routes
