@@ -92,7 +92,7 @@ if __name__ == "__main__":
         with sqlite3.connect(app.database) as connection:
             c = connection.cursor()
             c.execute("""CREATE TABLE shop_items(name TEXT, quantitiy TEXT, price TEXT)""")
-            c.execute("""CREATE TABLE shop_items_old(quantitiy TEXT, price TEXT)""")
+            c.execute("""CREATE TABLE shop_items_old(quantitiy NUMBER, price TEXT)""")
             c.execute("""CREATE TABLE employees(username TEXT, password TEXT)""")
             c.execute('INSERT INTO shop_items VALUES("water", "40", "100")')
             c.execute('INSERT INTO shop_items VALUES("juice", "40", "110")')
